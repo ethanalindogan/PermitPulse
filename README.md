@@ -21,22 +21,8 @@ What factors best explain the variation in estimated construction costs of Toron
 
 ## 📁 Project Structure
 
-PermitPulse/
-├── data/
-│ ├── cleaned_building_data.csv # Cleaned dataset
-│ └── raw_building_data.csv # Source data from City of Toronto (excluded from GitHub)
-│
-├── analysis/
-│ ├── PermitPulse_Report.html # Output from RMarkdown
-│ └── PermitPulse_Model.Rmd # Source RMarkdown file
-│
-├── reports/
-│ ├── STA302 Project Proposal.pdf
-│ └── STA302 Final Report.pdf
-│
-├── .gitignore
-├── README.md
-└── requirements.txt (for ML extension - coming soon)
+<img width="641" height="337" alt="image" src="https://github.com/user-attachments/assets/af2b14c0-be9c-45ea-8f55-89ab91e6bfa8" />
+
 
 
 ## 🌐 Data Source

@@ -1,0 +1,91 @@
+---
+title: "Project Proposal"
+author: "PermitPulse: Ethan Alindogan, Byungmok Ann, Suhani Dabhi, Genie Yoo"
+date: "July 18 2025"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(knitr)
+```
+
+## Research Question
+
+What are the key factors that influence the estimated construction cost of building permits in Toronto from 2017 to 2024?
+
+## Load Dataset
+
+```{r}
+building_data <- read.csv("raw_building_data.csv", stringsAsFactors = FALSE)
+```
+
+## Clean and Transform Data
+
+```{r}
+# Convert EST_CONST_COST to numeric
+building_data$EST_CONST_COST <- as.numeric(gsub(",", "", building_data$EST_CONST_COST))
+# Filter out non-positive or missing EST_CONST_COST
+building_data <- building_data[!is.na(building_data$EST_CONST_COST) & building_data$EST_CONST_COST > 0, ]
+# Remove negative values in DWELLING_UNITS_CREATED and RESIDENTIAL
+building_data <- building_data[building_data$DWELLING_UNITS_CREATED >= 0 & 
+                               building_data$RESIDENTIAL >= 0, ]
+# Select relevant columns
+cleaned_data <- building_data[, c("EST_CONST_COST", "PERMIT_TYPE", "STRUCTURE_TYPE", 
+                                  "WARD_GRID", "DWELLING_UNITS_CREATED", "RESIDENTIAL")]
+# Drop any remaining NAs
+cleaned_data <- na.omit(cleaned_data)
+# Set baseline for PERMIT_TYPE
+cleaned_data$PERMIT_TYPE <- relevel(as.factor(cleaned_data$PERMIT_TYPE), 
+                                    ref = "Residential Building Permit")
+
+```
+
+## Save Cleaned Data
+
+```{r}
+write.csv(cleaned_data, "cleaned_building_data.csv", row.names = FALSE)
+```
+
+## Summary Table of Predictors
+
+```{r}
+library(knitr)
+# Summary of numerical variables
+numeric_summary <- summary(cleaned_data[, c("EST_CONST_COST", "DWELLING_UNITS_CREATED", "RESIDENTIAL")])
+kable(numeric_summary, caption = "Table 1. Summary statistics of numeric predictors used in the model.")
+# Summary of categorical variables
+top_permit <- head(sort(table(cleaned_data$PERMIT_TYPE), decreasing = TRUE), 5)
+top_structure <- head(sort(table(cleaned_data$STRUCTURE_TYPE), decreasing = TRUE), 5)
+top_ward <- head(sort(table(cleaned_data$WARD_GRID), decreasing = TRUE), 5)
+cat_summary <- data.frame(
+  Permit_Type = names(top_permit),
+  Permit_Count = as.vector(top_permit),
+  Structure_Type = names(top_structure),
+  Structure_Count = as.vector(top_structure),
+  Ward = names(top_ward),
+  Ward_Count = as.vector(top_ward)
+)
+kable(cat_summary, caption = "Table 2. Top 5 categories of categorial predictors used in the model.")
+```
+
+## Fit Regression Model
+
+```{r}
+linear_reg <- lm(EST_CONST_COST ~ PERMIT_TYPE + STRUCTURE_TYPE + WARD_GRID +
+                   DWELLING_UNITS_CREATED + RESIDENTIAL, data = cleaned_data)
+# Extract key model statistics
+r2 <- summary(linear_reg)$r.squared
+adj_r2 <- summary(linear_reg)$adj.r.squared
+f_stat <- summary(linear_reg)$fstatistic[1]
+p_val <- pf(f_stat, summary(linear_reg)$fstatistic[2], summary(linear_reg)$fstatistic[3], lower.tail = FALSE)
+
+cat("The model explains", round(r2, 3), "of the variance in construction cost (Adjusted R² =", round(adj_r2, 3), ").")
+cat("The overall F-statistic is", round(f_stat, 1), "with a p-value <", signif(p_val, digits = 5), ", indicating the model is statistically significant.")
+```
+
+## Diagnostic Plots
+
+```{r, fig.width=10, fig.height=10}
+par(mfrow = c(2, 2))
+plot(linear_reg, caption = "Figure 1. Diagnostic plots for linear regression model.")
+```

@@ -2,7 +2,11 @@
 title: "Project Proposal"
 author: "PermitPulse: Ethan Alindogan, Byungmok Ann, Suhani Dabhi, Genie Yoo"
 date: "July 18 2025"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)

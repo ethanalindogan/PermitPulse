@@ -1,0 +1,91 @@
+---
+title: "PermitPulse Final Report"
+author: "PermitPulse: Ethan Alindogan, Byungmok Ann, Suhani Dabhi, Genie Yoo"
+date: "August 15 2025"
+output: html_document
+---
+```{r}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(knitr)
+library(dplyr)
+library(forcats) # for fct_lump_n
+```
+
+## Research Question
+
+What are the key factors that influence the estimated construction cost of building permits in Toronto from 2017 to 2024?
+
+## Load Dataset
+
+```{r}
+building_data <- read.csv("raw_building_data.csv", stringsAsFactors = FALSE)
+```
+
+## Clean and Transform Data
+
+```{r}
+# Convert EST_CONST_COST to numeric
+building_data$EST_CONST_COST <- as.numeric(gsub(",", "", building_data$EST_CONST_COST))
+# Filter out non-positive or missing EST_CONST_COST
+building_data <- building_data[!is.na(building_data$EST_CONST_COST) & building_data$EST_CONST_COST > 0, ]
+# Remove negative values in DWELLING_UNITS_CREATED and RESIDENTIAL
+building_data <- building_data[building_data$DWELLING_UNITS_CREATED >= 0 & 
+                               building_data$RESIDENTIAL >= 0, ]
+# Select relevant columns
+cleaned_data <- building_data[, c("EST_CONST_COST", "PERMIT_TYPE", "STRUCTURE_TYPE", 
+                                  "WARD_GRID", "DWELLING_UNITS_CREATED", "RESIDENTIAL")]
+# Drop any remaining NAs
+cleaned_data <- na.omit(cleaned_data)
+# Set baseline for PERMIT_TYPE
+cleaned_data$PERMIT_TYPE <- relevel(as.factor(cleaned_data$PERMIT_TYPE), 
+                                    ref = "Residential Building Permit")
+
+df2 <- cleaned_data %>%
+  mutate(
+    log_cost      = log(EST_CONST_COST),
+    PERMIT_TYPE   = fct_lump_n(as.factor(PERMIT_TYPE), n = 15, other_level = "Other"),
+    STRUCTURE_TYPE= fct_lump_n(as.factor(STRUCTURE_TYPE), n = 15, other_level = "Other"),
+    WARD_GRID     = fct_lump_n(as.factor(WARD_GRID), n = 30, other_level = "Other")
+  )
+
+```
+
+## Save Cleaned Data
+
+```{r}
+write.csv(cleaned_data, "cleaned_building_data.csv", row.names = FALSE)
+```
+
+### EDA and Diagnostics
+
+```{r}
+library(ggplot2)
+library(scales)
+library(MASS)
+
+# Fit OLS model on raw cost first
+ols_raw <- lm(EST_CONST_COST ~ PERMIT_TYPE + STRUCTURE_TYPE + WARD_GRID +
+                DWELLING_UNITS_CREATED + RESIDENTIAL,
+              data = df2)
+
+# Box–Cox plot
+boxcox(ols_raw, lambda = seq(-2, 2, 0.1),
+       main = "Box–Cox Transformation for Estimated Construction Cost",
+       xlab = "Lambda (λ)",
+       ylab = "Log-Likelihood")
+
+# Histogram of log(cost)
+ggplot(df2, aes(log_cost)) +
+  geom_histogram(bins = 60) +
+  labs(title="Log(Estimated Construction Cost)", x="log(Cost)", y="Count")
+
+# Boxplot: log(cost) by top 10 permit types
+top10_pt <- names(sort(table(df2$PERMIT_TYPE), decreasing=TRUE))[1:10]
+ggplot(subset(df2, PERMIT_TYPE %in% top10_pt),
+       aes(PERMIT_TYPE, log_cost)) +
+  geom_boxplot(outlier.alpha = 0.3) +
+  coord_flip() +
+  labs(title="log(Cost) by Permit Type (Top 10)", x="", y="log(Cost)")
+
+```

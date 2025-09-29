@@ -1,5 +1,13 @@
 # PermitPulse: Predicting Construction Costs in Toronto  
 ---
+## 🌆 Why We Started This Project  
+
+This project began with a simple conversation: *Why is rent in Toronto so high?*  
+As students living in the GTA, we often talk about the struggle of housing affordability. It became clear that the issue isn’t just about demand, it’s also about **how expensive it is to build housing in the first place**.  
+
+That’s how **PermitPulse** started. We wanted to use open data to dig into Toronto’s building permits and see how construction costs are shaped by project type, location, and scale. If we could better understand these drivers, we could also better understand why Toronto housing and rent feels out of reach for so many people.  
+
+---
 
 ## 📌 Project Overview  
 

@@ -20,7 +20,7 @@ What are the key factors that influence the estimated construction cost of build
 ## Load Dataset
 
 ```{r}
-building_data <- read.csv("raw_building_data.csv", stringsAsFactors = FALSE)
+building_data <- read.csv("../data/raw_building_data.csv", stringsAsFactors = FALSE)
 ```
 
 ## Clean and Transform Data
@@ -47,7 +47,7 @@ cleaned_data$PERMIT_TYPE <- relevel(as.factor(cleaned_data$PERMIT_TYPE),
 ## Save Cleaned Data
 
 ```{r}
-write.csv(cleaned_data, "cleaned_building_data.csv", row.names = FALSE)
+write.csv(cleaned_data, "../data/cleaned_building_data.csv", row.names = FALSE)
 ```
 
 ## Summary Table of Predictors

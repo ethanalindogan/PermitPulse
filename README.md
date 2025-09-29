@@ -1,81 +1,91 @@
-PermitPulse: Predicting Construction Costs in Toronto
-🌆 Why We Started This Project
+# PermitPulse: Predicting Construction Costs in Toronto  
 
-This project began with a simple conversation: Why is rent in Toronto so high?
-As students living in the GTA, we often talk about the struggle of housing affordability. It became clear that the issue isn’t just about demand — it’s also about how expensive it is to build housing in the first place.
+## 🌆 Why We Started This Project  
 
-That’s how PermitPulse started. We wanted to use open data to dig into Toronto’s building permits and see how construction costs are shaped by project type, location, and scale. If we could better understand these drivers, we could also better understand why Toronto housing — and rent — feels out of reach for so many people.
+This project began with a simple conversation: *Why is rent in Toronto so high?*  
+As students living in the GTA, we often talk about the struggle of housing affordability. It became clear that the issue isn’t just about demand — it’s also about **how expensive it is to build housing in the first place**.  
 
-📌 Project Overview
+That’s how **PermitPulse** started. We wanted to use open data to dig into Toronto’s building permits and see how construction costs are shaped by project type, location, and scale. If we could better understand these drivers, we could also better understand why Toronto housing — and rent — feels out of reach for so many people.  
 
-PermitPulse is a data analytics project for STA302 at the University of Toronto. We analyzed the City of Toronto’s Building Permits – Cleared Permits dataset (2017–2024), which contains over 100,000 permits, and built a multiple linear regression model to predict estimated construction costs.
+---
 
-Predictors included:
+## 📌 Project Overview  
 
-Permit type (new building, demolition, upgrades, etc.)
+PermitPulse is a data analytics project for **STA302 at the University of Toronto**. We analyzed the **City of Toronto’s Building Permits – Cleared Permits dataset (2017–2024)**, which contains over **100,000 permits**, and built a **multiple linear regression model** to predict estimated construction costs.  
 
-Structure type (apartment, single house, multi-unit, etc.)
+Predictors included:  
+- **Permit type** (new building, demolition, upgrades, etc.)  
+- **Structure type** (apartment, single house, multi-unit, etc.)  
+- **Ward location** (geographic differences across Toronto)  
+- **Dwelling units created**  
+- **Residential floor area**  
 
-Ward location (geographic differences across Toronto)
+We applied a **log-transformation** to stabilize variance and improve model assumptions.  
 
-Dwelling units created
+---
 
-Residential floor area
+## 🔑 Key Findings  
 
-We applied a log-transformation to stabilize variance and improve model assumptions.
+- **Permit type is the strongest driver**: “New Building” permits cost nearly **37× more** than baseline residential permits.  
+- **Project scale matters**: More units and bigger floor areas → higher costs.  
+- **Location matters**: Wards differ significantly, reflecting land values and zoning rules.  
+- **Structure type matters**: Apartments and multi-unit buildings cost less per permit compared to detached houses.  
 
-🔑 Key Findings
+The final model explained **~53% of cost variation**, showing that permit data captures a substantial share of Toronto’s construction cost drivers.  
 
-Permit type is the strongest driver: “New Building” permits cost nearly 37× more than baseline residential permits.
+---
 
-Project scale matters: More units and bigger floor areas → higher costs.
+## 🏙️ Why This Matters  
 
-Location matters: Wards differ significantly, reflecting land values and zoning rules.
+Toronto’s **housing affordability crisis** is fueled by both **demand pressures** and **construction costs**. Our findings highlight that cost-control measures need to be tailored by **project type and location**.  
 
-Structure type matters: Apartments and multi-unit buildings cost less per permit compared to detached houses.
+- For policymakers → insights on where housing supply bottlenecks may arise.  
+- For developers/investors → better budgeting, risk analysis, and project planning.  
+- For residents → a clearer picture of why rent and home prices are so high.  
 
-The final model explained ~53% of cost variation, showing that permit data captures a substantial share of Toronto’s construction cost drivers.
+---
 
-🏙️ Why This Matters
+## 📂 Repository Structure  
 
-Toronto’s housing affordability crisis is fueled by both demand pressures and construction costs. Our findings highlight that cost-control measures need to be tailored by project type and location.
-
-For policymakers → insights on where housing supply bottlenecks may arise.
-
-For developers/investors → better budgeting, risk analysis, and project planning.
-
-For residents → a clearer picture of why rent and home prices are so high.
-
-📂 Repository Structure
 PermitPulse/
 │
-├── data/  
-│   ├── raw_building_data.csv       # Original dataset (Cleared Building Permits 2017–2024, from City of Toronto Open Data)  
-│   └── cleaned_building_data.csv   # Cleaned dataset used for analysis  
+├── data/
+│ ├── raw_building_data.csv # Original dataset (Cleared Building Permits 2017–2024, from City of Toronto Open Data)
+│ └── cleaned_building_data.csv # Cleaned dataset used for analysis
 │
-├── reports/  
-│   ├── projectproposal.pdf  
-│   ├── finalreport.pdf  
+├── reports/
+│ ├── projectproposal.pdf
+│ ├── finalreport.pdf
 │
-├── scripts/  
-│   ├── pp_data_cleaning.Rmd  
-│   ├── pp_final_report.Rmd  
-│   ├── pp_data_cleaning.html  
-│   └── pp_final_report.html  
+├── scripts/
+│ ├── pp_data_cleaning.Rmd
+│ ├── pp_final_report.Rmd
+│ ├── pp_data_cleaning.html
+│ └── pp_final_report.html
 │
-└── README.md  
+└── README.md
 
-🚀 How to Reproduce
+---
 
-Download Cleared Building Permits (2017–2024) from the City of Toronto Open Data Portal
+## 🚀 How to Reproduce  
 
-Save it as:
-
+1. Download **Cleared Building Permits (2017–2024)** from the [City of Toronto Open Data Portal](https://open.toronto.ca/dataset/building-permits-cleared/).  
+   Save it as:  
 data/raw_building_data.csv
 
+2. Run `pp_data_cleaning.Rmd` to clean and preprocess the dataset.  
+3. Run `pp_final_report.Rmd` to generate the analysis, results, and visualizations.  
 
-Run pp_data_cleaning.Rmd to clean and preprocess the dataset.
+---
 
-Run pp_final_report.Rmd to generate the analysis, results, and visualizations.
+## 👥 Team  
 
-👉 PermitPulse connects our everyday conversations about rent to data-driven insights about Toronto’s housing costs. It shows how open data and statistical modeling can shine a light on one of the city’s biggest challenges: affordable housing.
+- **Ethan Alindogan** – Results  
+- **Byungmok Ann** – Methods  
+- **Suhani Dabhi** – Results  
+- **Genie Yoo** – Introduction & Conclusion  
+
+---
+
+👉 PermitPulse connects **our everyday conversations about rent** to **data-driven insights** about Toronto’s housing costs. It shows how open data and statistical modeling can shine a light on one of the city’s biggest challenges: **affordable housing**.  
+

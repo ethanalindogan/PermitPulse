@@ -3,9 +3,9 @@
 ## 🌆 Why We Started This Project  
 
 This project began with a simple conversation: *Why is rent in Toronto so high?*  
-As students living in the GTA, we often talk about the struggle of housing affordability. It became clear that the issue isn’t just about demand — it’s also about **how expensive it is to build housing in the first place**.  
+As students living in the GTA, we often talk about the struggle of housing affordability. It became clear that the issue isn’t just about demand, it’s also about **how expensive it is to build housing in the first place**.  
 
-That’s how **PermitPulse** started. We wanted to use open data to dig into Toronto’s building permits and see how construction costs are shaped by project type, location, and scale. If we could better understand these drivers, we could also better understand why Toronto housing — and rent — feels out of reach for so many people.  
+That’s how **PermitPulse** started. We wanted to use open data to dig into Toronto’s building permits and see how construction costs are shaped by project type, location, and scale. If we could better understand these drivers, we could also better understand why Toronto housing and rent feels out of reach for so many people.  
 
 ---
 
@@ -47,23 +47,8 @@ Toronto’s **housing affordability crisis** is fueled by both **demand pressure
 
 ## 📂 Repository Structure  
 
-PermitPulse/
-│
-├── data/
-│ ├── raw_building_data.csv # Original dataset (Cleared Building Permits 2017–2024, from City of Toronto Open Data)
-│ └── cleaned_building_data.csv # Cleaned dataset used for analysis
-│
-├── reports/
-│ ├── projectproposal.pdf
-│ ├── finalreport.pdf
-│
-├── scripts/
-│ ├── pp_data_cleaning.Rmd
-│ ├── pp_final_report.Rmd
-│ ├── pp_data_cleaning.html
-│ └── pp_final_report.html
-│
-└── README.md
+<img width="906" height="357" alt="image" src="https://github.com/user-attachments/assets/00d8e6f2-bf96-4f74-bc68-507e398b556d" />
+
 
 ---
 
@@ -76,14 +61,6 @@ data/raw_building_data.csv
 2. Run `pp_data_cleaning.Rmd` to clean and preprocess the dataset.  
 3. Run `pp_final_report.Rmd` to generate the analysis, results, and visualizations.  
 
----
-
-## 👥 Team  
-
-- **Ethan Alindogan** – Results  
-- **Byungmok Ann** – Methods  
-- **Suhani Dabhi** – Results  
-- **Genie Yoo** – Introduction & Conclusion  
 
 ---
 

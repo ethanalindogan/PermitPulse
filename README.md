@@ -47,19 +47,8 @@ Toronto’s **housing affordability crisis** is fueled by both **demand pressure
 
 ## 📂 Repository Structure  
 
-├── code/ # RMarkdown and HTML files for data cleaning and final report
-│ ├── pp_data_cleaning.html
-│ ├── pp_data_cleaning.rmd
-│ ├── pp_final_report.html
-│ └── pp_final_report.Rmd
-│
-├── data/ # Raw and cleaned datasets used for analysis
-│ ├── cleaned_building_data.csv
-│ └── raw_building_data.csv
-│
-├── reports/ # Project reports and proposal documents
-│ ├── finalreport.pdf
-│ └── projectproposal.pdf
+<img width="541" height="279" alt="image" src="https://github.com/user-attachments/assets/c83592f2-6071-4952-929a-4e81c46e99fb" />
+
 
 
 ---
